@@ -38,7 +38,9 @@ class ScheduleService
 
     public function find(int $id): Schedule
     {
-        return Schedule::with(['bus', 'route', 'bookings.passenger'])->findOrFail($id);
+        return Schedule::with(['bus', 'route', 'bookings.passenger'])->findOrFail($id); //hypothetical schedule detail page, the code below too is also valid if i dont use these hypothetical values (its only for future improvements)
+        
+        // return Schedule::findOrFail($id);
     }
 
     public function create(array $data): Schedule
@@ -79,32 +81,26 @@ class ScheduleService
         $schedule->delete();
     }
 
-    public function seatSummary(): Collection
+    public function seatSummary(string $search = ''): Collection
     {
-        return Schedule::query()
-            ->join('buses', 'schedules.bus_id', '=', 'buses.bus_id')
-            ->join('routes', 'schedules.route_id', '=', 'routes.route_id')
-            ->leftJoin('bookings', function ($join) {
-                $join->on('schedules.schedule_id', '=', 'bookings.schedule_id')
-                     ->where('bookings.booking_status', '=', 'Confirmed');
-            })
-            ->selectRaw('
-                schedules.schedule_id,
-                buses.bus_name,
-                routes.origin,
-                routes.destination,
-                schedules.departure_time,
-                buses.total_seats,
-                COUNT(bookings.booking_id)                          AS confirmed_bookings,
-                (buses.total_seats - COUNT(bookings.booking_id))    AS remaining_seats,
-                COALESCE(schedules.fare_override, routes.base_fare) AS current_fare
-            ')
-            ->groupBy(
-                'schedules.schedule_id', 'buses.bus_name', 'buses.total_seats',
-                'routes.origin', 'routes.destination', 'schedules.departure_time',
-                'schedules.fare_override', 'routes.base_fare'
+        return Schedule::with(['bus', 'route'])
+            ->withCount([
+                'bookings as confirmed_bookings' => fn($q) => $q->where('booking_status', 'Confirmed')
+            ])
+            ->when($search, fn($q) => $q
+                ->whereHas('route', fn($r) => $r
+                    ->where('origin', 'like', "%{$search}%")
+                    ->orWhere('destination', 'like', "%{$search}%")
+                )
+                ->orWhereHas('bus', fn($b) => $b
+                    ->where('bus_name', 'like', "%{$search}%")
+                )
             )
-            ->orderBy('schedules.departure_time')
-            ->get();
+            ->orderBy('departure_time')
+            ->get()
+            ->each(function (Schedule $schedule) {
+                $schedule->remaining_seats = $schedule->bus->total_seats - $schedule->confirmed_bookings;
+                $schedule->current_fare    = $schedule->fare_override ?? $schedule->route->base_fare;
+            });
     }
 }

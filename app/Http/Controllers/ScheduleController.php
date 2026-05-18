@@ -11,8 +11,13 @@ class ScheduleController extends Controller
         return view('pages.schedules.index');
     }
 
-    public function show(int $id): View
+    // public function show(int $id): View
+    // {
+    //     return view('pages.schedules.show', ['scheduleId' => $id]);
+    // }
+
+    public function seatSummary(): View
     {
-        return view('pages.schedules.show', ['scheduleId' => $id]);
+        return view('pages.schedules.seat-summary-page');
     }
 }

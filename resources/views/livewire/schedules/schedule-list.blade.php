@@ -97,8 +97,8 @@
 
                         <flux:table.cell class="text-right">
                             <flux:badge :color="$schedule->available_seats === 0
-                                        ? 'red'
-                                        : ($schedule->available_seats <= 5 ? 'yellow' : 'green')" size="sm">
+                                    ? 'red'
+                                    : ($schedule->available_seats <= 5 ? 'yellow' : 'green')" size="sm">
                                 {{ $schedule->available_seats }}
                             </flux:badge>
                         </flux:table.cell>
@@ -191,6 +191,7 @@
 
         <div class="space-y-4 py-4">
 
+            {{-- Bus --}}
             <flux:select wire:model="bus_id" label="Bus" placeholder="Select a bus...">
                 @foreach($buses as $bus)
                     <flux:select.option value="{{ $bus->bus_id }}">
@@ -200,6 +201,7 @@
             </flux:select>
             @error('bus_id') <flux:error>{{ $message }}</flux:error> @enderror
 
+            {{-- Route --}}
             <flux:select wire:model="route_id" label="Route" placeholder="Select a route...">
                 @foreach($routes as $route)
                     <flux:select.option value="{{ $route->route_id }}">
@@ -210,6 +212,7 @@
             </flux:select>
             @error('route_id') <flux:error>{{ $message }}</flux:error> @enderror
 
+            {{-- Departure / Arrival --}}
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <flux:input wire:model="departure_time" label="Departure" type="datetime-local" />
@@ -221,6 +224,7 @@
                 </div>
             </div>
 
+            {{-- Seats / Fare override --}}
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <flux:input wire:model="available_seats" label="Available Seats" type="number" min="0" />
@@ -233,6 +237,7 @@
                 </div>
             </div>
 
+            {{-- Status (only shown when editing) --}}
             @if($editingId)
                 <flux:select wire:model="schedule_status" label="Status">
                     <flux:select.option value="Scheduled">Scheduled</flux:select.option>

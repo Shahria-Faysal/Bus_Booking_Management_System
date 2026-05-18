@@ -13,44 +13,53 @@ class ScheduleList extends Component
     use WithPagination;
 
     // ── Filters ───────────────────────────────────────────────
-    public string $status   = '';
+    public string $status = '';
     public string $dateFrom = '';
-    public string $dateTo   = '';
+    public string $dateTo = '';
 
     // ── Flash ─────────────────────────────────────────────────
     public ?string $flashMessage = null;
-    public ?string $flashType    = null;
+    public ?string $flashType = null;
 
     // ── Modal state ───────────────────────────────────────────
-    public bool   $showModal  = false;
-    public ?int   $editingId  = null;
+    public bool $showModal = false;
+    public ?int $editingId = null;
 
     // ── Form fields ───────────────────────────────────────────
-    public int    $bus_id          = 0;
-    public int    $route_id        = 0;
-    public string $departure_time  = '';
-    public string $arrival_time    = '';
-    public int    $available_seats = 0;
-    public string $fare_override   = '';
+    public string $bus_id = '';
+    public string $route_id = '';
+    public string $departure_time = '';
+    public string $arrival_time = '';
+    public int $available_seats = 0;
+    public string $fare_override = '';
     public string $schedule_status = 'Scheduled';
 
     protected function rules(): array
     {
         return [
-            'bus_id'          => 'required|integer|min:1',
-            'route_id'        => 'required|integer|min:1',
-            'departure_time'  => 'required|date',
-            'arrival_time'    => 'required|date|after:departure_time',
+            'bus_id' => 'required|integer|min:1',
+            'route_id' => 'required|integer|min:1',
+            'departure_time' => 'required|date',
+            'arrival_time' => 'required|date|after:departure_time',
             'available_seats' => 'required|integer|min:0',
-            'fare_override'   => 'nullable|numeric|min:0',
+            'fare_override' => 'nullable|numeric|min:0',
             'schedule_status' => 'required|in:Scheduled,Departed,Arrived,Cancelled',
         ];
     }
 
     // ── Filter watchers ───────────────────────────────────────
-    public function updatedStatus(): void   { $this->resetPage(); }
-    public function updatedDateFrom(): void { $this->resetPage(); }
-    public function updatedDateTo(): void   { $this->resetPage(); }
+    public function updatedStatus(): void
+    {
+        $this->resetPage();
+    }
+    public function updatedDateFrom(): void
+    {
+        $this->resetPage();
+    }
+    public function updatedDateTo(): void
+    {
+        $this->resetPage();
+    }
 
     // ── Modal helpers ─────────────────────────────────────────
     public function openCreate(): void
@@ -64,14 +73,14 @@ class ScheduleList extends Component
     {
         $schedule = $service->find($id);
 
-        $this->editingId        = $id;
-        $this->bus_id           = $schedule->bus_id;
-        $this->route_id         = $schedule->route_id;
-        $this->departure_time   = $schedule->departure_time->format('Y-m-d\TH:i');
-        $this->arrival_time     = $schedule->arrival_time->format('Y-m-d\TH:i');
-        $this->available_seats  = $schedule->available_seats;
-        $this->fare_override    = $schedule->fare_override ?? '';
-        $this->schedule_status  = $schedule->schedule_status;
+        $this->editingId = $id;
+        $this->bus_id = (string) $schedule->bus_id;
+        $this->route_id = (string) $schedule->route_id;
+        $this->departure_time = $schedule->departure_time->format('Y-m-d\TH:i');
+        $this->arrival_time = $schedule->arrival_time->format('Y-m-d\TH:i');
+        $this->available_seats = $schedule->available_seats;
+        $this->fare_override = $schedule->fare_override ?? '';
+        $this->schedule_status = $schedule->schedule_status;
 
         $this->showModal = true;
     }
@@ -85,8 +94,13 @@ class ScheduleList extends Component
     private function resetForm(): void
     {
         $this->reset([
-            'bus_id', 'route_id', 'departure_time', 'arrival_time',
-            'available_seats', 'fare_override', 'editingId',
+            'bus_id',
+            'route_id',
+            'departure_time',
+            'arrival_time',
+            'available_seats',
+            'fare_override',
+            'editingId',
         ]);
         $this->schedule_status = 'Scheduled';
     }
@@ -97,12 +111,12 @@ class ScheduleList extends Component
         $this->validate();
 
         $data = [
-            'bus_id'          => $this->bus_id,
-            'route_id'        => $this->route_id,
-            'departure_time'  => $this->departure_time,
-            'arrival_time'    => $this->arrival_time,
+            'bus_id' => $this->bus_id,
+            'route_id' => $this->route_id,
+            'departure_time' => $this->departure_time,
+            'arrival_time' => $this->arrival_time,
             'available_seats' => $this->available_seats,
-            'fare_override'   => $this->fare_override !== '' ? $this->fare_override : null,
+            'fare_override' => $this->fare_override !== '' ? $this->fare_override : null,
             'schedule_status' => $this->schedule_status,
         ];
 
@@ -118,7 +132,7 @@ class ScheduleList extends Component
             $this->closeModal();
         } catch (\Exception $e) {
             $this->flashMessage = $e->getMessage();
-            $this->flashType    = 'error';
+            $this->flashType = 'error';
         }
     }
 
@@ -127,10 +141,10 @@ class ScheduleList extends Component
         try {
             $service->cancel($id);
             $this->flashMessage = 'Schedule and its bookings cancelled.';
-            $this->flashType    = 'success';
+            $this->flashType = 'success';
         } catch (\Exception $e) {
             $this->flashMessage = $e->getMessage();
-            $this->flashType    = 'error';
+            $this->flashType = 'error';
         }
     }
 
@@ -139,10 +153,10 @@ class ScheduleList extends Component
         try {
             $service->delete($id);
             $this->flashMessage = 'Schedule deleted.';
-            $this->flashType    = 'success';
+            $this->flashType = 'success';
         } catch (\Exception $e) {
             $this->flashMessage = $e->getMessage();
-            $this->flashType    = 'error';
+            $this->flashType = 'error';
         }
     }
 
@@ -150,12 +164,12 @@ class ScheduleList extends Component
     public function render(ScheduleService $service)
     {
         $schedules = $service->getAll(
-            status:   $this->status,
+            status: $this->status,
             dateFrom: $this->dateFrom,
-            dateTo:   $this->dateTo,
+            dateTo: $this->dateTo,
         );
 
-        $buses  = Bus::active()->orderBy('bus_name')->get(['bus_id', 'bus_name', 'bus_type']);
+        $buses = Bus::active()->orderBy('bus_name')->get(['bus_id', 'bus_name', 'bus_type']);
         $routes = Route::orderBy('origin')->get(['route_id', 'origin', 'destination', 'base_fare']);
 
         return view('livewire.schedules.schedule-list', compact('schedules', 'buses', 'routes'));
