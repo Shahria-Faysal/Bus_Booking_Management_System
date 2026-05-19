@@ -29,8 +29,8 @@ class Bus extends Model
 
     // ── Constants ─────────────────────────────────────────────
 
-    const BUS_TYPES = ['AC', 'Non-AC', 'Sleeper', 'Mini'];
-    const STATUSES  = ['Active', 'Maintenance', 'Retired'];
+    // const BUS_TYPES = ['AC', 'Non-AC', 'Sleeper', 'Mini'];
+    // const STATUSES  = ['Active', 'Maintenance', 'Retired'];
 
     // ── Relationships ──────────────────────────────────────────
 

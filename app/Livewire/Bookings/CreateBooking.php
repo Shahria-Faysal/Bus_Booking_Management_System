@@ -10,8 +10,8 @@ use Livewire\Component;
 class CreateBooking extends Component
 {
     // Form fields
-    public int    $schedule_id  = 0;
-    public int    $passenger_id = 0;
+    public string $schedule_id  = '';
+    public string $passenger_id = '';
     public string $seat_number  = '';
     public string $journey_date = '';
     public string $notes        = '';
@@ -49,17 +49,11 @@ class CreateBooking extends Component
 
         if (!$passenger || !$schedule) return;
 
-        $discountPct = match ($passenger->passenger_type) {
-            'Student' => 10.00,
-            'Senior'  => 15.00,
-            'VIP'     => 20.00,
-            default   => 0.00,
-        };
+        $fare = app(BookingService::class)->calculateFare($passenger, $schedule);
 
-        $baseFare          = (float) ($schedule->fare_override ?? $schedule->route->base_fare);
-        $this->previewFare = round($baseFare * (1 - $discountPct / 100), 2);
-        $this->previewDiscount = $discountPct > 0
-            ? "{$discountPct}% {$passenger->passenger_type} discount applied"
+        $this->previewFare = $fare['fare_paid'];
+        $this->previewDiscount = $fare['discount_pct'] > 0
+            ? "{$fare['discount_pct']}% {$passenger->passenger_type} discount applied"
             : null;
     }
 

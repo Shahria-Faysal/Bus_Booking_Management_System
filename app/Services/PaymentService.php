@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AuditLog;
 use App\Models\Payment;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -30,6 +31,10 @@ class PaymentService
             'payment_method' => $method,
             'payment_date'   => now(),
         ]);
+
+        AuditLog::write('PAYMENT_RECEIVED', 'payments', $payment->payment_id,
+            "Payment of ৳{$payment->amount_due} received via {$method}. Booking #{$payment->booking_id}");
+
         return $payment->fresh();
     }
 
@@ -45,6 +50,10 @@ class PaymentService
             'payment_method' => $method,
             'payment_date'   => now(),
         ]);
+
+        AuditLog::write('PAYMENT_PARTIAL', 'payments', $payment->payment_id,
+            "Partial payment of ৳{$amount} received via {$method}. Booking #{$payment->booking_id}");
+
         return $payment->fresh();
     }
 
@@ -61,6 +70,10 @@ class PaymentService
             'refund_amount'  => $payment->amount_paid,
             'payment_date'   => now(),
         ]);
+
+        AuditLog::write('PAYMENT_REFUND', 'payments', $payment->payment_id,
+            "Refund of ৳{$payment->amount_paid} issued for Booking #{$payment->booking_id}");
+
         return $payment->fresh();
     }
 

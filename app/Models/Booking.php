@@ -57,49 +57,49 @@ class Booking extends Model
     /**
      * Discount level label matching QUERY 35.
      */
-    public function getDiscountLevelAttribute(): string
-    {
-        return match (true) {
-            $this->discount_pct == 0   => 'No Discount',
-            $this->discount_pct <= 5   => 'Small Discount',
-            $this->discount_pct <= 15  => 'Standard Discount',
-            default                    => 'Premium Discount',
-        };
-    }
+    // public function getDiscountLevelAttribute(): string
+    // {
+    //     return match (true) {
+    //         $this->discount_pct == 0   => 'No Discount',
+    //         $this->discount_pct <= 5   => 'Small Discount',
+    //         $this->discount_pct <= 15  => 'Standard Discount',
+    //         default                    => 'Premium Discount',
+    //     };
+    // }
 
-    /**
-     * Whether a refund is eligible matching QUERY 34 logic.
-     */
-    public function getRefundEligibleAttribute(): bool
-    {
-        return $this->booking_status === 'Cancelled'
-            && $this->journey_date->isFuture();
-    }
+    // /**
+    //  * Whether a refund is eligible matching QUERY 34 logic.
+    //  */
+    // public function getRefundEligibleAttribute(): bool
+    // {
+    //     return $this->booking_status === 'Cancelled'
+    //         && $this->journey_date->isFuture();
+    // }
 
-    // ── Scopes ────────────────────────────────────────────────
+    // // ── Scopes ────────────────────────────────────────────────
 
-    public function scopeConfirmed($query)
-    {
-        return $query->where('booking_status', 'Confirmed');
-    }
+    // public function scopeConfirmed($query)
+    // {
+    //     return $query->where('booking_status', 'Confirmed');
+    // }
 
-    public function scopeCancelled($query)
-    {
-        return $query->where('booking_status', 'Cancelled');
-    }
+    // public function scopeCancelled($query)
+    // {
+    //     return $query->where('booking_status', 'Cancelled');
+    // }
 
-    public function scopeCompleted($query)
-    {
-        return $query->where('booking_status', 'Completed');
-    }
+    // public function scopeCompleted($query)
+    // {
+    //     return $query->where('booking_status', 'Completed');
+    // }
 
-    public function scopeForPassenger($query, int $passengerId)
-    {
-        return $query->where('passenger_id', $passengerId);
-    }
+    // public function scopeForPassenger($query, int $passengerId)
+    // {
+    //     return $query->where('passenger_id', $passengerId);
+    // }
 
-    public function scopeForSchedule($query, int $scheduleId)
-    {
-        return $query->where('schedule_id', $scheduleId);
-    }
+    // public function scopeForSchedule($query, int $scheduleId)
+    // {
+    //     return $query->where('schedule_id', $scheduleId);
+    // }
 }

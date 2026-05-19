@@ -27,7 +27,7 @@ class Schedule extends Model
         'fare_override'   => 'decimal:2',
     ];
 
-    const STATUSES = ['Scheduled', 'Departed', 'Arrived', 'Cancelled'];
+    // const STATUSES = ['Scheduled', 'Departed', 'Arrived', 'Cancelled'];
 
     // ── Relationships ──────────────────────────────────────────
 
