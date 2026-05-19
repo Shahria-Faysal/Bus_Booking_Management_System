@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuditLogController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\BusController;
 use App\Http\Controllers\DashboardController;
@@ -56,6 +57,11 @@ Route::middleware('auth')->group(function () {
     // ── Payments ─────────────────────────────────────────────────
     Route::prefix('payments')->name('payments.')->group(function () {
         Route::get('/', [PaymentController::class, 'index'])->name('index');
+    });
+
+    // ── Audit Logs ──────────────────────────────────────────────
+    Route::prefix('audit-logs')->name('audit-logs.')->group(function () {
+        Route::get('/', [AuditLogController::class, 'index'])->name('index');
     });
 
 });

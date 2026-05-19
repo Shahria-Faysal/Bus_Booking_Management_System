@@ -65,6 +65,12 @@
                     class="!text-zinc-300 hover:!text-white hover:!bg-zinc-700">
                     Payments
                 </flux:navlist.item>
+
+                <flux:navlist.item icon="document-text" href="{{ route('audit-logs.index') }}"
+                    :current="request()->routeIs('audit-logs.*')"
+                    class="!text-zinc-300 hover:!text-white hover:!bg-zinc-700">
+                    Audit Logs
+                </flux:navlist.item>
             </flux:navlist>
         </div>
 

@@ -10,6 +10,7 @@ class AuditLog extends Model
 
     protected $primaryKey = 'log_id';
 
+    const CREATED_AT = 'logged_at';
     const UPDATED_AT = null;
 
     protected $fillable = [
