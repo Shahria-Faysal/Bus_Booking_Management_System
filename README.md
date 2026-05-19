@@ -41,7 +41,7 @@ Admin-side bus ticket booking management system for transport operators. Handles
 
 ```bash
 # Clone the repo
-git clone <repo-url>
+git clone https://github.com/Shahria-Faysal/Bus_Booking_Management_System.git
 cd bus-booking-management
 
 # Install dependencies
