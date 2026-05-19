@@ -19,15 +19,19 @@ WORKDIR /app
 
 COPY . .
 
+# Create .env so artisan commands work during build
+RUN echo "APP_KEY=base64:qqtf2LSo984FG6QJlmInxZJNFjmZrtD3xffBX5eLKdo=\nDB_CONNECTION=sqlite" > .env
+
 # Build
 RUN composer install --no-interaction --optimize-autoloader --no-dev \
     && npm install && npm run build \
+    && touch database/database.sqlite \
     && php artisan config:cache \
     && php artisan route:cache \
     && php artisan view:cache
 
-# Create SQLite database
-RUN touch database/database.sqlite
+# Remove .env so runtime env vars from Render take over
+RUN rm .env
 
 EXPOSE $PORT
 
