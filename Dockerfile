@@ -27,13 +27,13 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev --no-script
 
 RUN npm install && npm run build
 
-RUN touch database/database.sqlite \
-    && php artisan config:cache \
-    && php artisan route:cache \
-    && php artisan view:cache
-
-RUN rm .env
+RUN rm .env && mkdir -p storage/logs storage/framework/{cache,sessions,views} storage/app \
+    && chmod -R 777 storage bootstrap/cache
 
 EXPOSE $PORT
 
-CMD php artisan migrate --force && php artisan serve --host 0.0.0.0 --port $PORT
+CMD php artisan migrate --force \
+    && php artisan config:cache \
+    && php artisan route:cache \
+    && php artisan view:cache \
+    && php artisan serve --host 0.0.0.0 --port $PORT
