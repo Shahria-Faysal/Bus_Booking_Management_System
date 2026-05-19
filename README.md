@@ -37,7 +37,7 @@ A full-featured bus booking management admin panel built with **Laravel 13**, **
 
 ```bash
 # Clone the repo
-git clone <repo-url>
+git clone https://github.com/Shahria-Faysal/Bus_Booking_Management_System.git
 cd bus-booking-management
 
 # Install dependencies
