@@ -112,3 +112,9 @@ EXPOSE $PORT
 # -----------------------------
 CMD php artisan migrate --force && \
     php artisan serve --host 0.0.0.0 --port $PORT
+
+
+# Dockerfile – add at the end of the file
+COPY docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
