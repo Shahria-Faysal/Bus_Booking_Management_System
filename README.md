@@ -103,18 +103,18 @@ database/
 
 ## Screenshots
 
-![alt text](<Screenshot 2026-05-19 122114.png>)
-![alt text](<Screenshot 2026-05-19 120341.png>)
-![alt text](<Screenshot 2026-05-19 120351.png>)
-![alt text](<Screenshot 2026-05-19 120455.png>)
-![alt text](<Screenshot 2026-05-19 120620.png>)
-![alt text](<Screenshot 2026-05-19 120707.png>)
-![alt text](<Screenshot 2026-05-19 120936.png>)
-![alt text](<Screenshot 2026-05-19 120957.png>)
-![alt text](<Screenshot 2026-05-19 121337.png>)
-![alt text](<Screenshot 2026-05-19 121401.png>) 
-![alt text](<Screenshot 2026-05-19 122106.png>)
-![alt text](<Screenshot 2026-05-19 121910.png>)
+![alt text](<screenshots/Screenshot 2026-05-19 122114.png>)
+![alt text](<screenshots/Screenshot 2026-05-19 120341.png>)
+![alt text](<screenshots/Screenshot 2026-05-19 120351.png>)
+![alt text](<screenshots/Screenshot 2026-05-19 120455.png>)
+![alt text](<screenshots/Screenshot 2026-05-19 120620.png>)
+![alt text](<screenshots/Screenshot 2026-05-19 120707.png>)
+![alt text](<screenshots/Screenshot 2026-05-19 120936.png>)
+![alt text](<screenshots/Screenshot 2026-05-19 120957.png>)
+![alt text](<screenshots/Screenshot 2026-05-19 121337.png>)
+![alt text](<screenshots/Screenshot 2026-05-19 121401.png>)
+![alt text](<screenshots/Screenshot 2026-05-19 122106.png>)
+![alt text](<screenshots/Screenshot 2026-05-19 121910.png>)
 
 ## License
 
