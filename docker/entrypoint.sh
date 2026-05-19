@@ -15,7 +15,10 @@ fi
 # Vite uses VITE_ASSET_URL to prefix asset URLs; keep it in sync.
 export VITE_ASSET_URL="${APP_URL}"
 
-# Optional: pre‑warm Laravel caches (no‑output if already cached)
+# Run migrations (idempotent — safe to run every boot)
+php artisan migrate --force
+
+# Pre‑warm Laravel caches (no‑output if already cached)
 php artisan config:cache
 php artisan route:cache || true   # ignore failure if routes not cached yet
 php artisan view:cache  || true
