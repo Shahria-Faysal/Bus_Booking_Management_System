@@ -6,6 +6,7 @@ A full-featured bus booking management admin panel built with **Laravel 13**, **
 
 Admin-side bus ticket booking management system for transport operators. Handles the full operational workflow — managing bus fleets and routes, scheduling trips, processing bookings with automatic passenger-type discounts (Student/Senior/VIP), tracking payments with partial/full/refund support, and maintaining an immutable audit trail. Currently a single-role admin dashboard; passenger-facing frontend planned in React.
 
+##Live Demo: https://bus-booking-management-system-0vln.onrender.com
 ## Features
 
 - **Dashboard** — Real-time stats: active buses, upcoming trips, revenue, outstanding balance
